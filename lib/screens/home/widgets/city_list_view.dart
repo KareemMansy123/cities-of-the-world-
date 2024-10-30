@@ -19,8 +19,6 @@ class _CityListViewState extends State<CityListView> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-
-    // Trigger initial data load
     context.read<CityBloc>().add(LoadCitiesEvent());
   }
 
@@ -51,22 +49,47 @@ class _CityListViewState extends State<CityListView> {
                 );
               }
               final city = state.cities[index];
-              return ListTile(
-                title: Text(city.name ?? ''),
-                subtitle: Text(city.localName ?? ''),
-                onTap: () {
-                  // it always show snakbar coz your api always return null for lat and lng
-                  if (city.lat != null && city.lng != null) {
-                    openMap(city.lat!, city.lng!);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Location not available')),
-                    );
-                  }
-                }
+              return Card(
+                elevation: 3,
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.location_city, color: Colors.blueAccent),
+                  title: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          city.name ?? 'Unknown City',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        if (city.localName != null)
+                          Text(
+                            city.localName!,
+                            style: TextStyle(color: Colors.grey.shade600),
+                          ),
+                      ],
+                    ),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                  onTap: () {
+                    if (city.lat != null && city.lng != null) {
+                      openMap(city.lat!, city.lng!);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Location not available')),
+                      );
+                    }
+                  },
+                ),
               );
             },
           );
+        } else if (state is CityErrorState) {
+          return Center(child: Text(state.message));
         } else {
           return const Center(child: Text("Failed to load cities"));
         }
@@ -80,5 +103,3 @@ class _CityListViewState extends State<CityListView> {
     super.dispose();
   }
 }
-
-

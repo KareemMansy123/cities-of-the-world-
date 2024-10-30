@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 import 'app/services/api_service.dart';
+import 'blocs/app_bloc/app_bloc.dart';
+import 'blocs/app_bloc/app_event.dart';
+import 'blocs/app_bloc/app_state.dart';
 import 'blocs/city_bloc/city_bloc.dart';
 import 'blocs/city_bloc/city_event.dart';
 import 'common/repository/city_repository.dart';
@@ -18,16 +21,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => CityBloc(cityRepository)..add(LoadCitiesEvent()), // Dispatch event here
-        ),
+        BlocProvider<AppBloc>(create: (_) => AppBloc()..add(AppStarted())),
+        BlocProvider<CityBloc>(create: (_) => CityBloc(cityRepository)),
       ],
-      child: MaterialApp(
-        title: 'Cities of the World',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomeScreen(),
+      child: BlocBuilder<AppBloc, AppState>(
+        builder: (context, state) {
+          bool isDarkTheme = false;
+          if (state is ThemeState) {
+            isDarkTheme = state.isDarkTheme;
+          }
+          return MaterialApp(
+            title: 'Cities of the World',
+            theme: isDarkTheme ? ThemeData.dark() : ThemeData.light(),
+            home: const HomeScreen(),
+          );
+        },
       ),
     );
   }
