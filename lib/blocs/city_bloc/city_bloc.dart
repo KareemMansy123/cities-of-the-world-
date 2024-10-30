@@ -7,6 +7,7 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   final CityRepository cityRepository;
   int currentPage = 1;
   int? totalPages;
+  bool isLoadingMore = false;
 
   CityBloc(this.cityRepository) : super(CityLoadingState()) {
     on<LoadCitiesEvent>(_onLoadCities);
@@ -22,12 +23,18 @@ class CityBloc extends Bloc<CityEvent, CityState> {
     emit(CityLoadedState(cityResponse.items ?? []));
   }
 
-  void _onLoadMoreCities(LoadMoreCitiesEvent event, Emitter<CityState> emit) async {
-    if (currentPage < (totalPages ?? 1) && state is CityLoadedState) {
+  Future<void> _onLoadMoreCities(LoadMoreCitiesEvent event, Emitter<CityState> emit) async {
+    if (!isLoadingMore && currentPage < (totalPages ?? 1) && state is CityLoadedState) {
+      isLoadingMore = true;
       currentPage++;
+
+      emit(CityLoadedState((state as CityLoadedState).cities, isLoadingMore: true));
+
       final cityResponse = await cityRepository.fetchCities(page: currentPage);
       final updatedCities = [...(state as CityLoadedState).cities, ...?cityResponse.items];
-      emit(CityLoadedState(updatedCities));
+      emit(CityLoadedState(updatedCities, isLoadingMore: false));
+
+      isLoadingMore = false;
     }
   }
 
