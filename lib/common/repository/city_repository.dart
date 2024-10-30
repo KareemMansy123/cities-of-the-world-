@@ -1,13 +1,14 @@
+import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:cities_of_the_world/app/services/api_service.dart';
 import '../models/city.dart';
 import '../models/city_response.dart';
 
 class CityRepository {
-  final ApiService apiService;
+  final ApiService apiService = GetIt.I<ApiService>();
   final Box<City> cityBox;
 
-  CityRepository({required this.apiService, required this.cityBox});
+  CityRepository({required this.cityBox});
 
   Future<CityResponse> fetchCities({int page = 1, String? filter}) async {
     try {

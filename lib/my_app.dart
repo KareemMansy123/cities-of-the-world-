@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Cities of the World',
             theme: isDarkTheme ? ThemeData.dark() : ThemeData.light(),
+            navigatorKey: GetIt.I<GlobalKey<NavigatorState>>(),
             home: const HomeScreen(),
           );
         },

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -25,10 +26,10 @@ Future<void> setupInjection() async {
   getIt.registerSingleton<ApiService>(ApiService(Dio()));
   getIt.registerSingleton<CityRepository>(
     CityRepository(
-      apiService: getIt<ApiService>(),
       cityBox: getIt<Box<City>>(),
     ),
   );
+  getIt.registerSingleton<GlobalKey<NavigatorState>>(GlobalKey<NavigatorState>());
 
   // Register BLoCs
   getIt.registerFactory<AppBloc>(() => AppBloc());

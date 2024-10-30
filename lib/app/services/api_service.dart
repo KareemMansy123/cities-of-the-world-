@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import '../../common/models/city_response.dart';
 import 'chunked_logInterceptor.dart';
+import 'error_handler.dart';
 
 class ApiService {
   final Dio dio;
@@ -21,8 +22,8 @@ class ApiService {
       );
 
       return CityResponse.fromJson(response.data['data']);
-    } catch (e) {
-      print('Error fetching cities: $e');
+    } catch (error) {
+      ErrorHandler.handleError(error, onRetry: () => fetchCities(page: page, filter: filter));
       throw Exception('Failed to load cities');
     }
   }
