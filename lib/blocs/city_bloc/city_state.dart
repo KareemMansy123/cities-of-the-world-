@@ -36,18 +36,14 @@ class CityMapViewState extends CityState {
   List<Object?> get props => [cities];
 }
 class CityLoadingState extends CityState {
-  CityLoadingState() {
-    print("CityLoadingState initialized");
-  }
+  CityLoadingState() {}
 }
 
 class CityLoadedState extends CityState {
   final List<City> cities;
   final bool isLoadingMore;
 
-  CityLoadedState(this.cities, {this.isLoadingMore = false}) {
-    print("CityLoadedState initialized with ${cities.length} cities, isLoadingMore: $isLoadingMore");
-  }
+  CityLoadedState(this.cities, {this.isLoadingMore = false}) {}
 
   @override
   List<Object?> get props => [cities, isLoadingMore];

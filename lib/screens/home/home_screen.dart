@@ -1,8 +1,6 @@
 import 'package:cities_of_the_world/screens/home/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../app/common/utils.dart';
-import '../../blocs/city_bloc/city_bloc.dart';
 import '../setting/setting_screen.dart';
 import 'widgets/city_list_view.dart';
 

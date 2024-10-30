@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 
 class ErrorHandler {
   static void handleError(dynamic error, {VoidCallback? onRetry}) {
-    debugPrint('Error occurred: $error');
 
     if (error is DioException) {
       // Handle different DioExceptions

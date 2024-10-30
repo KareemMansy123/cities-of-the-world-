@@ -20,8 +20,6 @@ class CityRepository {
 
       return cityResponse;
     } catch (e) {
-      print("Error fetching cities from API: $e");
-
       // Load cached cities if there's an error
       return CityResponse(items: _getCachedCities());
     }
@@ -32,7 +30,6 @@ class CityRepository {
       final cityResponse = await apiService.fetchCities(filter: query);
       return cityResponse.items ?? [];
     } catch (e) {
-      print("Error during search: $e");
       // Fallback to cached data if online search fails
       return cityBox.values
           .where((city) => city.name?.toLowerCase().contains(query.toLowerCase()) ?? false)
@@ -47,12 +44,10 @@ class CityRepository {
     for (var city in recentCities) {
       await cityBox.put(city.id, city);
     }
-    print("Total Cities Cached: ${cityBox.length}");
   }
 
   List<City> _getCachedCities() {
     final cachedCities = cityBox.values.toList();
-    print("Loaded ${cachedCities.length} cities from cache.");
     return cachedCities;
   }
 }

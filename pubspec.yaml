@@ -40,7 +40,7 @@ dependencies:
   hive: ^2.0.0         # Lightweight storage
   hive_flutter: ^1.0.0 # Hive support for Flutter
   # Map Integration
-  google_maps_flutter: ^2.3.0 # Google Maps for map view
+  google_maps_flutter: ^2.1.1 # Google Maps for map view
   # Caching & Network Handling
   connectivity_plus: ^3.0.0   # Detect network status
   cached_network_image: ^3.2.0 # Cache images in list view

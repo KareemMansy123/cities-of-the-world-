@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'blocs/app_bloc/app_bloc.dart';
 import 'blocs/app_bloc/app_state.dart';
 import 'blocs/city_bloc/city_bloc.dart';
-import 'common/repository/city_repository.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -76,6 +76,13 @@ class _CityListViewState extends State<CityListView> {
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
                   onTap: () {
+                    // here is the second screen that can show city details and map but i dont have key for google map
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (_) => CityDetailsScreen(city: city),
+                    //   ),
+                    // );
                     if (city.lat != null && city.lng != null) {
                       openMap(city.lat!, city.lng!);
                     } else {
