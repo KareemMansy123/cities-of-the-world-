@@ -14,12 +14,13 @@ class CityRepository {
       final cityResponse = await apiService.fetchCities(page: page, filter: filter);
       final cities = cityResponse.items ?? [];
 
-      // Cache the fetched cities
-      await _cacheCities(cities);
+      // Cache the 10 most recent cities in Hive
+      await _cacheRecentCities(cities);
 
       return cityResponse;
     } catch (e) {
       print("Error fetching cities from API: $e");
+
       // Load cached cities if there's an error
       return CityResponse(items: _getCachedCities());
     }
@@ -30,17 +31,19 @@ class CityRepository {
       final cityResponse = await apiService.fetchCities(filter: query);
       return cityResponse.items ?? [];
     } catch (e) {
-      // Search in cached data if online search fails
+      print("Error during search: $e");
+      // Fallback to cached data if online search fails
       return cityBox.values
-          .where((city) => (city.name ?? '').toLowerCase().contains(query.toLowerCase()))
+          .where((city) => city.name?.toLowerCase().contains(query.toLowerCase()) ?? false)
           .toList();
     }
   }
 
-  Future<void> _cacheCities(List<City> cities) async {
-    print("Clearing and caching ${cities.length} cities.");
+  Future<void> _cacheRecentCities(List<City> cities) async {
+    // Limit the cache to the 10 most recent cities
+    final recentCities = cities.take(10).toList();
     await cityBox.clear();
-    for (var city in cities) {
+    for (var city in recentCities) {
       await cityBox.put(city.id, city);
     }
     print("Total Cities Cached: ${cityBox.length}");

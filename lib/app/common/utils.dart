@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> openMap(double latitude, double longitude) async {
@@ -8,4 +9,8 @@ Future<void> openMap(double latitude, double longitude) async {
   } else {
     throw 'Could not open the map.';
   }
+}
+
+void closeKeyboard(BuildContext context) {
+  FocusScope.of(context).unfocus();
 }
