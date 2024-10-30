@@ -15,6 +15,21 @@ class LoadCitiesEvent extends CityEvent {
   List<Object?> get props => [page, filter];
 }
 
-class LoadMoreCitiesEvent extends CityEvent {} // New event for loading more cities
+class LoadMoreCitiesEvent extends CityEvent {
+  final int page;
 
-class ToggleViewEvent extends CityEvent {} // Toggle view between list and map
+   LoadMoreCitiesEvent(this.page);
+
+  @override
+  List<Object?> get props => [page];
+}
+
+
+class SearchCitiesEvent extends CityEvent {
+  final String query;
+
+  SearchCitiesEvent(this.query);
+}
+
+class ToggleViewEvent extends CityEvent {} // Toggle view between list and map but we dont have map key
+

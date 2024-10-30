@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cities_of_the_world/blocs/search_bloc/search_bloc.dart';
 import 'package:cities_of_the_world/common/base_state.dart';
 import '../../blocs/search_bloc/search_event.dart';
-import '../../common/models/city_adapter.dart';
+import '../../common/models/city.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -38,8 +38,8 @@ class SearchScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       City city = state.data[index];
                       return ListTile(
-                        title: Text(city.name),
-                        subtitle: Text(city.name),
+                        title: Text(city.name ?? ""),
+                        subtitle: Text(city.name ?? ""),
                       );
                     },
                   );

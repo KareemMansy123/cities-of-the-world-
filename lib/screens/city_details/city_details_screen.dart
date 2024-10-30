@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/models/city_adapter.dart';
+import '../../common/models/city.dart';
 
 class CityDetailsScreen extends StatelessWidget {
   final City city;
@@ -10,7 +10,7 @@ class CityDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(city.name)),
+      appBar: AppBar(title: Text(city.name ?? "")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

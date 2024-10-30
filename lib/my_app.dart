@@ -6,23 +6,20 @@ import 'package:hive/hive.dart';
 
 import 'app/services/api_service.dart';
 import 'blocs/city_bloc/city_bloc.dart';
+import 'blocs/city_bloc/city_event.dart';
 import 'common/repository/city_repository.dart';
 
 class MyApp extends StatelessWidget {
-  final Box cityBox;
+  final CityRepository cityRepository;
 
-  const MyApp({Key? key, required this.cityBox}) : super(key: key);
+  const MyApp({Key? key, required this.cityRepository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dio = Dio();
-    final apiService = ApiService(dio);
-    final cityRepository = CityRepository(apiService: apiService, cityBox: cityBox);
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => CityBloc(cityRepository),
+          create: (context) => CityBloc(cityRepository)..add(LoadCitiesEvent()), // Dispatch event here
         ),
       ],
       child: MaterialApp(

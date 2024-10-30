@@ -1,23 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-import '../../common/models/city_adapter.dart';
+import '../../common/models/city.dart';
 
 abstract class CityState extends Equatable {
   const CityState();
 
   @override
   List<Object?> get props => [];
-}
-
-class CityLoadingState extends CityState {}
-
-class CityLoadedState extends CityState {
-  final List<City> cities;
-
-  const CityLoadedState(this.cities);
-
-  @override
-  List<Object?> get props => [cities];
 }
 
 class CityErrorState extends CityState {
@@ -45,4 +34,21 @@ class CityMapViewState extends CityState {
 
   @override
   List<Object?> get props => [cities];
+}
+class CityLoadingState extends CityState {
+  CityLoadingState() {
+    print("CityLoadingState initialized");
+  }
+}
+
+class CityLoadedState extends CityState {
+  final List<City> cities;
+  final bool isLoadingMore;
+
+  CityLoadedState(this.cities, {this.isLoadingMore = false}) {
+    print("CityLoadedState initialized with ${cities.length} cities, isLoadingMore: $isLoadingMore");
+  }
+
+  @override
+  List<Object?> get props => [cities, isLoadingMore];
 }

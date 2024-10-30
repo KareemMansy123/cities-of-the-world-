@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import '../../common/models/city_response.dart';
+import 'chunked_logInterceptor.dart';
 
 class ApiService {
   final Dio dio;
 
-  ApiService(this.dio);
+  ApiService(this.dio) {
+    dio.interceptors.add(ChunkedLogInterceptor());
+  }
 
   Future<CityResponse> fetchCities({int page = 1, String? filter}) async {
     try {
@@ -19,6 +22,7 @@ class ApiService {
 
       return CityResponse.fromJson(response.data['data']);
     } catch (e) {
+      print('Error fetching cities: $e');
       throw Exception('Failed to load cities');
     }
   }

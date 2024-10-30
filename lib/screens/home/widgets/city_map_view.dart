@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cities_of_the_world/blocs/city_bloc/city_bloc.dart';
-
+import 'package:url_launcher/url_launcher.dart';
+import '../../../app/common/utils.dart';
+import '../../../blocs/city_bloc/city_bloc.dart';
 import '../../../blocs/city_bloc/city_state.dart';
 
 class CityMapView extends StatelessWidget {
@@ -13,19 +13,27 @@ class CityMapView extends StatelessWidget {
     return BlocBuilder<CityBloc, CityState>(
       builder: (context, state) {
         if (state is CityLoadedState) {
-          return GoogleMap(
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(0, 0),
-              zoom: 2,
-            ),
-            markers: state.cities
-                .map((city) => Marker(
-              markerId: MarkerId(city.id.toString()),
-              position: LatLng(city.lat, city.lng),
-              infoWindow: InfoWindow(title: city.name, snippet: city.name),
-            ))
-                .toSet(),
+          return ListView.builder(
+            itemCount: state.cities.length,
+            itemBuilder: (context, index) {
+              final city = state.cities[index];
+              return ListTile(
+                title: Text(city.name ?? ""),
+                subtitle: Text(city.localName ?? ""),
+                onTap: () {
+                  if (city.lat != null && city.lng != null) {
+                    openMap(city.lat!, city.lng!);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Location not available')),
+                    );
+                  }
+                },
+              );
+            },
           );
+        } else if (state is CityErrorState) {
+          return Center(child: Text(state.message));
         } else {
           return const Center(child: CircularProgressIndicator());
         }

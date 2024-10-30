@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cities_of_the_world/common/base_state.dart';
-import '../../common/models/city_adapter.dart';
+import '../../common/models/city.dart';
 import 'search_event.dart';
 import 'package:cities_of_the_world/common/repository/city_repository.dart';
 
