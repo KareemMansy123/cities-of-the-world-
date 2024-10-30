@@ -1,3 +1,4 @@
+import 'package:cities_of_the_world/app/common/screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/city_bloc/city_bloc.dart';
@@ -16,7 +17,7 @@ class SearchBarWidget extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.grey),
         prefixIcon: const Icon(Icons.search, color: Colors.grey),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.dp),
           borderSide: BorderSide.none,
         ),
         filled: true,

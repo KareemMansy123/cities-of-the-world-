@@ -1,3 +1,4 @@
+import 'package:cities_of_the_world/app/common/screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../app/common/utils.dart';
@@ -43,15 +44,15 @@ class _CityListViewState extends State<CityListView> {
             itemCount: state.cities.length + (state.isLoadingMore ? 1 : 0),
             itemBuilder: (context, index) {
               if (index == state.cities.length) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Center(child: CircularProgressIndicator()),
+                return  Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.dp),
+                  child: const Center(child: CircularProgressIndicator()),
                 );
               }
               final city = state.cities[index];
               return Card(
                 elevation: 3,
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                margin:  EdgeInsets.symmetric(horizontal: 10.dp, vertical: 6.dp),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -64,7 +65,7 @@ class _CityListViewState extends State<CityListView> {
                       children: [
                         Text(
                           city.name ?? 'Unknown City',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 16.dp, fontWeight: FontWeight.bold),
                         ),
                         if (city.localName != null)
                           Text(
@@ -74,7 +75,7 @@ class _CityListViewState extends State<CityListView> {
                       ],
                     ),
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16.dp, color: Colors.grey),
                   onTap: () {
                     // here is the second screen that can show city details and map but i dont have key for google map
                     // Navigator.push(
