@@ -24,8 +24,16 @@ class MyApp extends StatelessWidget {
           }
           return MaterialApp(
             title: 'Cities of the World',
-            theme: isDarkTheme ? ThemeData.dark() : ThemeData.light(),
-            navigatorKey: GetIt.I<GlobalKey<NavigatorState>>(),
+            theme: ThemeData.light().copyWith(
+              textTheme: TextTheme(
+                headlineSmall: ThemeData.light().textTheme.headlineSmall,
+              ),
+            ),
+            darkTheme: ThemeData.dark().copyWith(
+              textTheme: TextTheme(
+                headlineSmall: ThemeData.dark().textTheme.headlineSmall,
+              ),
+            ),            navigatorKey: GetIt.I<GlobalKey<NavigatorState>>(),
             home: const HomeScreen(),
           );
         },

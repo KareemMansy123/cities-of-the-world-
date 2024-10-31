@@ -1,5 +1,5 @@
+import 'package:cities_of_the_world/screens/city_details/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../common/models/city.dart';
 
 class CityDetailsScreen extends StatelessWidget {
@@ -17,38 +17,37 @@ class CityDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // City details
-          Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  city.name ?? 'Unknown City',
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Text('Local Name: ${city.localName ?? 'Not available'}'),
-                const SizedBox(height: 8),
-                Text('Country ID: ${city.countryId ?? 'Not available'}'),
+                if (city.name != null) ...[
+                  Text(
+                    city.name!,
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+                if (city.localName != null) ...[
+                  Text('Local Name: ${city.localName}'),
+                  const SizedBox(height: 8),
+                ],
+                if (city.countryId != null) ...[
+                  Text('Country ID: ${city.countryId}'),
+                ] else ...[
+                  const Text('Country ID: Not available'),
+                ],
               ],
             ),
           ),
           const Divider(),
 
-          // Google Map
+          // Map with Expanded
           Expanded(
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(city.lat ?? 0.0, city.lng ?? 0.0),
-                zoom: 10,
-              ),
-              markers: {
-                Marker(
-                  markerId: MarkerId(city.id.toString()),
-                  position: LatLng(city.lat ?? 0.0, city.lng ?? 0.0),
-                  infoWindow: InfoWindow(title: city.name),
-                ),
-              },
+            child: CityMapWidget(
+              latitude: city.lat ?? 40.7128,
+              longitude: city.lng ?? -74.0060,
             ),
           ),
         ],

@@ -54,8 +54,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   logging: 1.0.2
   url_launcher: ^6.1.7
-  logger: ^1.1.0
+  logger: ^2.4.0
   path_provider: ^2.0.11
+  flutter_map: ^6.2.1
+#  latlong2: ^0.8.1
 
 dev_dependencies:
   flutter_test:
