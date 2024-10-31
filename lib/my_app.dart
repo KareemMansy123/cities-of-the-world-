@@ -18,12 +18,10 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
-          bool isDarkTheme = false;
-          if (state is ThemeState) {
-            isDarkTheme = state.isDarkTheme;
-          }
+          bool isDarkTheme = state is ThemeState && state.isDarkTheme;
           return MaterialApp(
             title: 'Cities of the World',
+            themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
             theme: ThemeData.light().copyWith(
               textTheme: TextTheme(
                 headlineSmall: ThemeData.light().textTheme.headlineSmall,
@@ -33,7 +31,8 @@ class MyApp extends StatelessWidget {
               textTheme: TextTheme(
                 headlineSmall: ThemeData.dark().textTheme.headlineSmall,
               ),
-            ),            navigatorKey: GetIt.I<GlobalKey<NavigatorState>>(),
+            ),
+            navigatorKey: GetIt.I<GlobalKey<NavigatorState>>(),
             home: const HomeScreen(),
           );
         },

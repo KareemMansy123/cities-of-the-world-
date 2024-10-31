@@ -42,8 +42,7 @@ class CityDetailsScreen extends StatelessWidget {
             ),
           ),
           const Divider(),
-
-          // Map with Expanded
+          // City map
           Expanded(
             child: CityMapWidget(
               latitude: city.lat ?? 40.7128,
