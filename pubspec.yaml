@@ -57,7 +57,9 @@ dependencies:
   logger: ^2.4.0
   path_provider: ^2.0.11
   flutter_map: ^6.2.1
-#  latlong2: ^0.8.1
+  bloc_test: ^9.0.0
+  hive_test: ^1.0.0
+  mockito: ^5.0.17
 
 dev_dependencies:
   flutter_test:
