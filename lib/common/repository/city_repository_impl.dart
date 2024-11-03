@@ -14,9 +14,19 @@ class CityRepositoryImpl implements CityRepository {
   @override
   Future<CityResponse> fetchCities({int page = 1, String? filter}) async {
     try {
-      final cityResponse = await apiService.fetchCities(page: page, filter: filter);
+      final response = await apiService.get(
+        'city',
+        queryParameters: {
+          'page': page,
+          'filter[0][name][contains]': filter,
+          'include': 'country',
+        },
+      );
+
+      final cityResponse = CityResponse.fromJson(response.data['data']);
       final cities = cityResponse.items ?? [];
       await _cacheRecentCities(cities);
+
       return cityResponse;
     } catch (e) {
       // Return cached cities on error
@@ -27,7 +37,15 @@ class CityRepositoryImpl implements CityRepository {
   @override
   Future<List<City>> searchCitiesByName(String query) async {
     try {
-      final cityResponse = await apiService.fetchCities(filter: query);
+      final response = await apiService.get(
+        'city',
+        queryParameters: {
+          'filter[0][name][contains]': query,
+          'include': 'country',
+        },
+      );
+
+      final cityResponse = CityResponse.fromJson(response.data['data']);
       return cityResponse.items ?? [];
     } catch (e) {
       return cityBox.values
