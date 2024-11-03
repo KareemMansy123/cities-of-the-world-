@@ -15,7 +15,7 @@ class CityRepositoryImpl implements CityRepository {
   Future<CityResponse> fetchCities({int page = 1, String? filter}) async {
     try {
       final response = await apiService.get(
-        'city',
+        '/city',
         queryParameters: {
           'page': page,
           'filter[0][name][contains]': filter,
@@ -38,7 +38,7 @@ class CityRepositoryImpl implements CityRepository {
   Future<List<City>> searchCitiesByName(String query) async {
     try {
       final response = await apiService.get(
-        'city',
+        '/city',
         queryParameters: {
           'filter[0][name][contains]': query,
           'include': 'country',
