@@ -60,6 +60,7 @@ dependencies:
   bloc_test: ^9.0.0
   hive_test: ^1.0.0
   mockito: ^5.0.17
+  rxdart: ^0.27.0
 
 dev_dependencies:
   flutter_test:

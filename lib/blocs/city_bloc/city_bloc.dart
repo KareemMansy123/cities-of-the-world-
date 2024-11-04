@@ -1,5 +1,5 @@
-// city_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 import '../../common/user_case/city.dart';
 import '../../common/user_case/search.dart';
 import 'city_event.dart';
@@ -14,7 +14,10 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   CityBloc({required this.fetchCitiesUseCase, required this.searchCitiesUseCase}) : super(CityLoadingState()) {
     on<LoadCitiesEvent>(_onLoadCities);
     on<LoadMoreCitiesEvent>(_onLoadMoreCities);
-    on<SearchCitiesEvent>(_onSearchCities);
+    on<SearchCitiesEvent>(
+      _onSearchCities,
+      transformer: debounce(const Duration(milliseconds: 300)),
+    );
   }
 
   void _onLoadCities(LoadCitiesEvent event, Emitter<CityState> emit) async {
@@ -38,5 +41,9 @@ class CityBloc extends Bloc<CityEvent, CityState> {
     emit(CityLoadingState());
     final searchResults = await searchCitiesUseCase(event.query);
     emit(CityLoadedState(searchResults));
+  }
+
+  EventTransformer<T> debounce<T>(Duration duration) {
+    return (events, mapper) => events.debounceTime(duration).asyncExpand(mapper);
   }
 }
